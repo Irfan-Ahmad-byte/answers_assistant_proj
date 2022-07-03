@@ -1,3 +1,17 @@
+'''
+This is a GUI application that acts as answer assistant. 
+It has two frames, to saving the question and the related
+answer other to get answer of a question. It will not 
+return an answer if it was not saved fot the respective question.
+
+Developer: Irfan Ahmad
+github: https://github.com/irfan-ahmad-byte/
+fiverr: https://www.fiverr.com/irfanmlka
+twitter: https://twitter.com/IrfanAhmad1707
+date: July 3, 2022
+'''
+
+
 import tkinter
 import tkinter.messagebox
 import customtkinter

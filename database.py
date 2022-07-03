@@ -1,3 +1,15 @@
+'''
+This script will handle saving and retrieving data.
+This is a part of answers_assistant.py project.
+
+Developer: Irfan Ahmad
+github: https://github.com/irfan-ahmad-byte/
+fiverr: https://www.fiverr.com/irfanmlka
+twitter: https://twitter.com/IrfanAhmad1707
+date: July 3, 2022
+'''
+
+
 import sqlite3 as sql
 from sqlite3 import Error
 import spacy
