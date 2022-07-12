@@ -18,12 +18,58 @@ import customtkinter
 
 from tkinter import filedialog as fd
 from tkinter import *
+import pyttsx3
+import datetime
+import speech_recognition as sr #pip install speechRecognition
 
 import database
 
 customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"
 
+engine = pyttsx3.init()
+voices = engine.getProperty('voices')
+# print(voices[1].id)
+engine.setProperty('voice', voices[1].id)
+
+def wishMe():
+    hour = int(datetime.datetime.now().hour)
+    if hour>=0 and hour<12:
+        speak("Good Morning!")
+
+    elif hour>=12 and hour<18:
+        speak("Good Afternoon!")   
+
+    else:
+        speak("Good Evening!")  
+
+    speak("I am Alice, Sir. Please tell me how may I help you")       
+
+def speak(audio):
+    engine.say(audio)
+    engine.runAndWait()
+
+
+def takeCommand():
+    #It takes microphone input from the user and returns string output
+
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Listening...")
+        r.pause_threshold = 1
+        audio = r.listen(source)
+
+    try:
+        print("Recognizing...")    
+        query = r.recognize_google(audio, language='en-in')
+        print(f"User said: {query}\n")
+
+    except Exception as e:
+        # print(e)    
+        print("Say that again please...") 
+        #speak('Say that Again Please...') 
+        return "None"
+    return query
 
 class App(customtkinter.CTk):
 
@@ -142,8 +188,12 @@ class App(customtkinter.CTk):
         function to save question and answer in the database
         '''
 
+        # try:
+        #     question = takeCommand()
         question = self.entry_quest.get()
         answer = self.entry_ans.get()
+        speak(f'You saved an answer for the question')
+        speak(question)
         conn = database.dbconnect('database/questions.db')
         save = database.save_ans(conn, (question, answer))
         conn.close()
@@ -161,6 +211,9 @@ class App(customtkinter.CTk):
         ans = database.get_ans(conn, question)
         conn.close()
 
+        speak('Sir, Here is your answer.')
+        speak(ans)
+
         self.label_info_2.set_text(ans)
 
 
@@ -170,6 +223,7 @@ class App(customtkinter.CTk):
 
 if __name__ == "__main__":
     app = App()
+    wishMe()
     app.mainloop()
 
 '''===================================================================='''

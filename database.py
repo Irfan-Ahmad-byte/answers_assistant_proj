@@ -16,12 +16,7 @@ import spacy
 import nltk
 import subprocess
 
-try:
-    from nltk.corpus import stopwords
-except:
-    nltk.download("stopwords")
-    nltk.download("wordnet")
-    from nltk.corpus import stopwords
+from nltk.corpus import stopwords
 
 try:
     nlp = spacy.load("en_core_web_sm")        
